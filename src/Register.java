@@ -32,7 +32,7 @@ public class Register {
         for (Denomination value : values) {
             if (left < value.amt()) continue;
             double numNeeded = (left - (left % value.amt())) / value.amt();
-            left = left - (left % value.amt());
+            left = (left % value.amt());
             change.add(value, (int) numNeeded);
         }
 
