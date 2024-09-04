@@ -14,7 +14,7 @@ public class PursePanel extends JPanel {
         super();
 
         //this.setLayout(new GridBagLayout());
-        this.setBackground(Color.red);
+        this.setBackground(Color.gray);
     }
 
     public void paintComponent(Graphics g) {
@@ -23,6 +23,7 @@ public class PursePanel extends JPanel {
         if (purse == null) {
             return;
         }
+
         ArrayList<BufferedImage> imgs = new ArrayList<BufferedImage>();
         ArrayList<Integer> amounts = new ArrayList<Integer>();
         ArrayList<Boolean> bill = new ArrayList<Boolean>();
