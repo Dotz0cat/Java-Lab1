@@ -13,23 +13,25 @@ public class PursePanel extends JPanel {
     PursePanel() {
         super();
 
-        //this.setLayout(new GridBagLayout());
         this.setBackground(Color.gray);
     }
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
+        //if null no need to draw anything
         if (purse == null) {
             return;
         }
 
+        //arraylists to hold the images, amounts, and if it is a bill
         ArrayList<BufferedImage> imgs = new ArrayList<BufferedImage>();
         ArrayList<Integer> amounts = new ArrayList<Integer>();
         ArrayList<Boolean> bill = new ArrayList<Boolean>();
 
         for (Map.Entry<Denomination, Integer> entry: purse.cash.entrySet()) {
            try {
+               //try to load the image from resources
                imgs.add(ImageIO.read(this.getClass().getResource(entry.getKey().img())));
                if (entry.getKey().form().equals("Bill")) {
                    bill.add(true);
@@ -42,6 +44,7 @@ public class PursePanel extends JPanel {
                System.err.printf("Opps can't read: %s\n", entry.getKey().img());
            }
 
+           //get iterators for the arraylists
            Iterator<BufferedImage> imgsIter = imgs.iterator();
            Iterator<Boolean> billIter = bill.iterator();
            Iterator<Integer> amountsIter = amounts.iterator();
@@ -50,11 +53,14 @@ public class PursePanel extends JPanel {
            int currentY = 0;
            int amountToChangeXBy = 0;
 
+           //iterate over the arraylists to handle drawing
            while(imgsIter.hasNext()) {
-               //do this multiple times
+
                BufferedImage image = imgsIter.next();
                boolean billForm = billIter.next();
                int amount = amountsIter.next();
+
+               //for when there is multiple needed to make change
                for (int i = 0; i < amount; i++) {
 
                    if (billForm) {
@@ -73,7 +79,5 @@ public class PursePanel extends JPanel {
                currentY = 0;
            }
         }
-
-
     }
 }

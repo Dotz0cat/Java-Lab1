@@ -13,6 +13,7 @@ public class RegisterPanel extends JPanel {
 
     public class inputListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
+            //get text from text field then redraw gui
             String text = input.getText();
             double amt = 0.0;
             try {
@@ -31,6 +32,7 @@ public class RegisterPanel extends JPanel {
     public RegisterPanel() {
         super();
 
+        //make the objects
         this.InputPanel = new JPanel();
         this.input = new JTextField();
         this.ChangePanel = new PursePanel();
@@ -41,6 +43,7 @@ public class RegisterPanel extends JPanel {
 
         this.setBackground(Color.green);
 
+        //a very good but verbose layout style
         this.setLayout(new GridBagLayout());
 
         GridBagConstraints inputConstraints = new GridBagConstraints();
@@ -71,6 +74,7 @@ public class RegisterPanel extends JPanel {
         changeConstraints.weightx = 1.0;
         changeConstraints.weighty = 1.0;
 
+        //add the objects to the jpanel and set options
         this.add(InputPanel, inputConstraints);
         this.InputPanel.setLayout(new GridBagLayout());
         this.InputPanel.setBackground(Color.gray);
