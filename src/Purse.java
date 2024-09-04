@@ -37,7 +37,14 @@ public class Purse {
     public String toString() {
         StringBuilder str = new StringBuilder();
 
-        str.append(getValue());
+        double amt = this.getValue();
+        str.append(amt);
+
+        if (amt == 0.0) {
+            str.append("\t\t\t\t");
+            str.append("Empty Purse\n");
+            return str.toString();
+        }
 
         for (Map.Entry<Denomination, Integer> entry : this.cash.entrySet()) {
             str.append("\t\t\t\t");
