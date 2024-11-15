@@ -16,14 +16,14 @@ public class Register {
 
     public Purse makeChange(double amt) {
         Denomination[] values = {
-                Denomination.of(50.0),
-                Denomination.of(10.0),
-                Denomination.of(5.0),
-                Denomination.of(1.0),
-                Denomination.of(0.25),
-                Denomination.of(0.10),
-                Denomination.of(0.05),
-                Denomination.of(0.01)
+                MoneyFactory.getDenotationOf(50.0),
+                MoneyFactory.getDenotationOf(10.0),
+                MoneyFactory.getDenotationOf(5.0),
+                MoneyFactory.getDenotationOf(1.0),
+                MoneyFactory.getDenotationOf(0.25),
+                MoneyFactory.getDenotationOf(0.10),
+                MoneyFactory.getDenotationOf(0.05),
+                MoneyFactory.getDenotationOf(0.01)
         };
 
         long left = Math.round(amt * 100);  // amt should be in dollars, now we work in cents

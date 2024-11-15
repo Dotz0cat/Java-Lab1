@@ -30,11 +30,7 @@ public class PursePanel extends JPanel {
         for (Denomination denomination : purse.getDenominations()) {
             int currentY = 0;
             for (int i = 0; i < purse.getAmount(denomination); i++) {
-                try {
-                    g.drawImage(denomination.getImage(), currentX, currentY, denomination.form().equals("Bill") ? BILL_SIZE : COIN_SIZE, ITEM_SIZE, this);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
+                g.drawImage(denomination.getImage(), currentX, currentY, denomination.form().equals("Bill") ? BILL_SIZE : COIN_SIZE, ITEM_SIZE, this);
                 currentY += DOWN_LENGTH;
             }
             currentX += SIDE_LENGTH + (denomination.form().equals("Bill") ? BILL_SIZE : COIN_SIZE);
