@@ -26,14 +26,17 @@ public class Register {
                 Denomination.of(0.01)
         };
 
-        double left = amt;
+        long left = Math.round(amt * 100);  // amt should be in dollars, now we work in cents
         Purse change = new Purse();
 
         for (Denomination value : values) {
-            if (left < value.amt()) continue;
-            double numNeeded = (left - (left % value.amt())) / value.amt();
-            left = (left % value.amt());
-            change.add(value, (int) numNeeded);
+            long valueInCents = Math.round(value.amt() * 100);  // Convert denomination to cents
+            if (left < valueInCents) continue;
+
+            long numNeeded = left / valueInCents;  // How many of this denomination
+            left = left % valueInCents;  // Remaining amount
+
+            change.add(value, (int) numNeeded);  // Add to the purse, casting numNeeded to an int
         }
 
         return change;

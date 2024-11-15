@@ -4,12 +4,12 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 
 public class RegisterPanel extends JPanel {
-    Register register;
-    JPanel InputPanel;
-    JTextField input;
-    PursePanel ChangePanel;
+    private Register register;
+    private JPanel InputPanel;
+    private JTextField input;
+    private PursePanel ChangePanel;
 
-    JLabel label;
+    private JLabel label;
 
     public class inputListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
@@ -23,8 +23,9 @@ public class RegisterPanel extends JPanel {
             catch (Exception ex) {
                 label.setText("Invalid Number");
             }
-            ChangePanel.purse = register.makeChange(amt);
-            ChangePanel.paintComponent(ChangePanel.getGraphics());
+            ChangePanel.setPurse(register.makeChange(amt));
+            ChangePanel.repaint();
+            ChangePanel.revalidate();
             return;
         }
     }

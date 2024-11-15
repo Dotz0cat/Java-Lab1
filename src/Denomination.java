@@ -1,3 +1,8 @@
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.util.Objects;
+
 public record Denomination(
         String name,
         double amt,
@@ -19,12 +24,15 @@ public record Denomination(
         } else if (amt == 0.10) {
             return new Denomination("Dime", amt, "Coin", "dime.png");
         } else if (amt == 0.05) {
-            return new Denomination("Nickle", amt, "Coin", "nickle.png");
+            return new Denomination("Nickle", amt, "Coin", "nickel.png");
         } else if (amt == 0.01) {
             return new Denomination("Penny", amt, "Coin", "penny.png");
         } else {
-            System.err.printf("%f is not available\n", amt);
             return new Denomination("", 0.0, "", "");
         }
+    }
+
+    public BufferedImage getImage() throws IOException {
+        return ImageIO.read(Objects.requireNonNull(this.getClass().getResource(this.img())));
     }
 }

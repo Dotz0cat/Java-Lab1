@@ -1,15 +1,19 @@
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class Purse {
-    Map<Denomination, Integer> cash;
+    private Map<Denomination, Integer> cash;
 
     Purse() {
         this.cash = new HashMap<Denomination, Integer>();
     }
 
     public void add(Denomination type, int num) {
-        cash.put(type, num);
+        if (cash.containsKey(type)) {
+            cash.put(type, cash.get(type) + num);
+        }
+        else {
+            cash.put(type, num);
+        }
     }
 
     public double remove(Denomination type, int num) {
@@ -56,4 +60,14 @@ public class Purse {
 
         return str.toString();
     }
+
+    public List<Denomination> getDenominations() {
+        return cash.keySet().stream().toList();
+    }
+
+    public int getAmount(Denomination denomination) {
+        return cash.get(denomination);
+    }
+
+
 }
