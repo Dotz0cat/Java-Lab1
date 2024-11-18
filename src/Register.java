@@ -2,8 +2,27 @@ import java.util.Scanner;
 
 public class Register {
 
-    Register() {
+    ChangeMaker method;
+    MoneyFactory moneyFactory;
 
+    Register() {
+        this.method = new LeastChange();
+        this.moneyFactory = new USMoneyFactory();
+    }
+
+    Register(ChangeMaker method) {
+        this.method = method;
+        this.moneyFactory = new USMoneyFactory();
+    }
+
+    Register(MoneyFactory moneyFactory) {
+        this.method = new LeastChange();
+        this.moneyFactory = moneyFactory;
+    }
+
+    Register(ChangeMaker method, MoneyFactory moneyFactory) {
+        this.method = method;
+        this.moneyFactory = moneyFactory;
     }
 
     public static void main(String[] argv) {
@@ -15,31 +34,6 @@ public class Register {
     }
 
     public Purse makeChange(double amt) {
-        Denomination[] values = {
-                MoneyFactory.getDenotationOf(50.0),
-                MoneyFactory.getDenotationOf(10.0),
-                MoneyFactory.getDenotationOf(5.0),
-                MoneyFactory.getDenotationOf(1.0),
-                MoneyFactory.getDenotationOf(0.25),
-                MoneyFactory.getDenotationOf(0.10),
-                MoneyFactory.getDenotationOf(0.05),
-                MoneyFactory.getDenotationOf(0.01)
-        };
-
-        long left = Math.round(amt * 100);  // amt should be in dollars, now we work in cents
-        Purse change = new Purse();
-
-        for (Denomination value : values) {
-            long valueInCents = Math.round(value.amt() * 100);  // Convert denomination to cents
-            if (left < valueInCents) continue;
-
-            long numNeeded = left / valueInCents;  // How many of this denomination
-            left = left % valueInCents;  // Remaining amount
-
-            change.add(value, (int) numNeeded);  // Add to the purse, casting numNeeded to an int
-        }
-
-        return change;
-
+        return method.makeChange(amt, moneyFactory.getAllDenotations());
     }
 }
