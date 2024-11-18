@@ -36,4 +36,12 @@ public class Register {
     public Purse makeChange(double amt) {
         return method.makeChange(amt, moneyFactory.getAllDenotations());
     }
+
+    public void setMethod(ChangeMaker changeMaker) {
+        this.method = changeMaker;
+    }
+
+    public void setMoneyFactory(MoneyFactory moneyFactory) {
+        this.moneyFactory = moneyFactory;
+    }
 }

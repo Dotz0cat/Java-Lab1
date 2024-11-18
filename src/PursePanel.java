@@ -1,6 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
-import java.io.IOException;
+import java.awt.image.BufferedImage;
 
 public class PursePanel extends JPanel {
     private Purse purse;
@@ -27,10 +27,14 @@ public class PursePanel extends JPanel {
 
         int currentX = 0;
 
+        int panelHeight = this.getHeight();
+
         for (Denomination denomination : purse.getDenominations()) {
             int currentY = 0;
+            BufferedImage image = denomination.getImage();
             for (int i = 0; i < purse.getAmount(denomination); i++) {
-                g.drawImage(denomination.getImage(), currentX, currentY, denomination.form().equals("Bill") ? BILL_SIZE : COIN_SIZE, ITEM_SIZE, this);
+                if (currentY > panelHeight) break;
+                g.drawImage(image, currentX, currentY, denomination.form().equals("Bill") ? BILL_SIZE : COIN_SIZE, ITEM_SIZE, this);
                 currentY += DOWN_LENGTH;
             }
             currentX += SIDE_LENGTH + (denomination.form().equals("Bill") ? BILL_SIZE : COIN_SIZE);

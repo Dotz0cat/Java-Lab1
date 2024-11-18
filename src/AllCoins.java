@@ -1,14 +1,15 @@
 import java.util.Collection;
 import java.util.Comparator;
 
-public class MostCoins implements ChangeMaker {
+public class AllCoins implements ChangeMaker {
     @Override
     public Purse makeChange(double amt, Collection<Denomination> denominationCollection) {
         final long[] left = {Math.round(amt * 100)};  // amt should be in dollars, now we work in cents
         Purse change = new Purse();
 
         denominationCollection.stream()
-                .sorted((d1, d2) -> Double.compare(d1.amt(), d2.amt()))
+                .sorted((d1, d2) -> Double.compare(d1.amt(), d2.amt()) * -1)
+                .filter(d -> d.form().equals("Coin"))
                 .forEachOrdered(value -> {
                     long valueInCents = Math.round(value.amt() * 100);  // Convert denomination to cents
                     if (left[0] > valueInCents) {

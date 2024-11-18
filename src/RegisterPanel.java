@@ -1,6 +1,7 @@
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Map;
 import javax.swing.*;
 
 public class RegisterPanel extends JPanel {
@@ -8,6 +9,18 @@ public class RegisterPanel extends JPanel {
     private JPanel InputPanel;
     private JTextField input;
     private PursePanel ChangePanel;
+
+    private static Map<String, ChangeMaker> methods;
+
+    static {
+        methods = Map.of(
+                "Least Change", new LeastChange(),
+                "Randomized Change", new RandomizedChange(),
+                "All Coins", new AllCoins()
+        );
+    }
+
+    private JComboBox<String> changeMethod;
 
     private JLabel label;
 
@@ -38,6 +51,7 @@ public class RegisterPanel extends JPanel {
         this.input = new JTextField();
         this.ChangePanel = new PursePanel();
         this.register = new Register();
+        this.changeMethod = new JComboBox<>(methods.keySet().toArray(new String[0]));
 
         this.label = new JLabel("Enter A number to make change", SwingConstants.CENTER);
         this.label.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 32));
@@ -50,6 +64,7 @@ public class RegisterPanel extends JPanel {
         GridBagConstraints inputConstraints = new GridBagConstraints();
         GridBagConstraints inputFieldConstraints = new GridBagConstraints();
         GridBagConstraints labelConstraints = new GridBagConstraints();
+        GridBagConstraints changeMethodConstraints = new GridBagConstraints();
         GridBagConstraints changeConstraints = new GridBagConstraints();
 
         inputConstraints.anchor = GridBagConstraints.PAGE_START;
@@ -68,9 +83,15 @@ public class RegisterPanel extends JPanel {
         labelConstraints.weightx = 1.0;
         labelConstraints.weighty = 0.0;
 
+        changeMethodConstraints.anchor = GridBagConstraints.PAGE_START;
+        changeMethodConstraints.gridy = 2;
+        changeMethodConstraints.fill = GridBagConstraints.HORIZONTAL;
+        changeMethodConstraints.weightx = 1.0;
+        changeMethodConstraints.weighty = 0.0;
+
         changeConstraints.anchor = GridBagConstraints.PAGE_START;
         changeConstraints.fill = GridBagConstraints.BOTH;
-        changeConstraints.gridy = 2;
+        changeConstraints.gridy = 3;
         changeConstraints.gridheight = 3;
         changeConstraints.weightx = 1.0;
         changeConstraints.weighty = 1.0;
@@ -83,6 +104,15 @@ public class RegisterPanel extends JPanel {
         this.input.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 36));
         this.input.addActionListener(new inputListener());
         this.add(label, labelConstraints);
+        this.add(changeMethod, changeMethodConstraints);
         this.add(ChangePanel, changeConstraints);
+
+        this.changeMethod.addActionListener(_ -> {
+            if (methods.containsKey(changeMethod.getSelectedItem())) {
+                register.setMethod(methods.get(changeMethod.getSelectedItem()));
+            }
+        });
+
+        this.register.setMethod(methods.get(changeMethod.getSelectedItem()));
     }
 }
